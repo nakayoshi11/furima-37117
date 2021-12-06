@@ -12,7 +12,7 @@ users テーブル
 | birth_date          | date   | null: false |
 
 - has_many :items
-- has_many :purchase_history
+- has_many :purchase_histories
 
 items テーブル
 
@@ -43,9 +43,9 @@ addresses テーブル
 | telephone_number   | string   | null: false |
 | purchase_history   | references | null: false, foreign_key: true|
 
-- belongs_to :purchase_historys
+- belongs_to :purchase_histories
 
-purchase_historys テーブル
+purchase_histories テーブル
 
 | Column             | Type       | Options     |
 | ------------------ | ------     | ----------- |
@@ -54,4 +54,4 @@ purchase_historys テーブル
 
 - belongs_to :user
 - belongs_to :item
-- has_one :addresses
+- has_one :address
