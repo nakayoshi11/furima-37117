@@ -43,7 +43,7 @@ addresses テーブル
 | telephone_number   | string   | null: false |
 | purchase_history   | references | null: false, foreign_key: true|
 
-- belongs_to :purchase_histories
+- belongs_to :purchase_history
 
 purchase_histories テーブル
 
