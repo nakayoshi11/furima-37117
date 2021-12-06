@@ -12,8 +12,7 @@ users テーブル
 | birth_date          | date   | null: false |
 
 - has_many :items
-- has_many :addresses
-- has_one :Purchase_history
+- has_many :purchase_history
 
 items テーブル
 
@@ -29,8 +28,7 @@ items テーブル
 | Selling_price               | integer| null: false |
 
 - belongs_to :user
-- has_one :addresses
-- has_one :Purchase_history
+- has_one :purchase_history
 
 addresses テーブル
 
@@ -43,15 +41,15 @@ addresses テーブル
 | building_name      | string   | null: false |
 | telephone_number   | string   | null: false |
 
-belongs_to :item
-belongs_to :user
+- belongs_to :purchase_historys
 
-Purchase_historys テーブル
+purchase_historys テーブル
 
 | Column             | Type       | Options     |
 | ------------------ | ------     | ----------- |
 | item               | references | null: false, foreign_key: true|
 | user               | references | null: false, foreign_key: true|
 
-belongs_to :user
-belongs_to :item
+- belongs_to :user
+- belongs_to :item
+- has_one :purchase
