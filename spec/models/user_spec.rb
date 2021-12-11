@@ -16,6 +16,20 @@ RSpec.describe User, type: :model do
       @user.valid?
       expect(@user.errors.full_messages).to include "Email can't be blank"
     end
+    it 'emailには「@」を含む必要があること' do
+      @user.email = 'abc123gmail.com'
+      @user.valid?
+      expect(@user.errors.full_messages).to include "Email is invalid"
+    end
+
+    it 'emailが他のユーザーと重複していると登録できないこと（一意性）' do
+      binding.pry
+      @user.save
+      another_user = FactoryBot.build(:user)
+      another_user.email = @user.email
+      another_user.valid?
+      expect(another_user.errors.full_messages).to include "Email has already been taken"
+    end
     it 'passwordが空では登録できない' do
       @user.password = ''
       @user.valid?
@@ -37,12 +51,12 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include "First name can't be blank"
     end
     it 'last_nameが全角ひらがな漢字でなければ登録できない' do
-      @user.last_name = '/\A[一-龥ぁ-ん]/'
+      @user.last_name = 'Aa@:1'
       @user.valid?
       expect(@user.errors.full_messages).to include "Last name is invalid. Input full-width characters"
     end
     it 'first_nameが全角ひらがな漢字でなければ登録できない' do
-      @user.first_name = '/\A[一-龥ぁ-ん]/'
+      @user.first_name = 'aA@:1'
       @user.valid?
       expect(@user.errors.full_messages).to include "First name is invalid. Input full-width characters"
     end
@@ -57,12 +71,12 @@ RSpec.describe User, type: :model do
       expect(@user.errors.full_messages).to include "First name kana can't be blank"
     end
     it 'last_name_kanaがカナでなければ登録できない' do
-      @user.last_name_kana = '/\A[ァ-ヶー－]+\z/'
+      @user.last_name_kana = 'aAあ亜1:@'
       @user.valid?
       expect(@user.errors.full_messages).to include "Last name kana is invalid. Input full-width katakana characters"
     end
     it 'first_name_kanaがカナでなければ登録できない' do
-      @user.first_name_kana = '/\A[ァ-ヶー－]+\z/'
+      @user.first_name_kana = 'aAあ亜1:@'
       @user.valid?
       expect(@user.errors.full_messages).to include "First name kana is invalid. Input full-width katakana characters"
     end

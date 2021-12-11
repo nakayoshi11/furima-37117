@@ -9,9 +9,9 @@ class User < ApplicationRecord
          
           validates :nickname, presence: true
           validates :last_name, presence: true
-          validates_format_of :last_name, with: /\A[一-龥ぁ-ん]/, message: 'is invalid. Input full-width characters'
+          validates_format_of :last_name, with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters'
           validates :first_name, presence: true
-          validates_format_of :first_name, with: /\A[一-龥ぁ-ん]/, message: 'is invalid. Input full-width characters'
+          validates_format_of :first_name, with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/, message: 'is invalid. Input full-width characters'
           validates :last_name_kana, presence: true
           validates_format_of :last_name_kana, with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width katakana characters'
           validates :first_name_kana, presence: true
