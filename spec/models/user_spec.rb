@@ -108,11 +108,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include "First name kana is invalid. Input full-width katakana characters"
       end
-      it 'nicknameを登録できるとき' do
-        @user.nickname = ''
-        @user.valid?
-        expect(@user.errors.full_messages).to include "Nickname can't be blank"
-      end
     end
   end
 end
