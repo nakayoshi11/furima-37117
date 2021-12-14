@@ -7,7 +7,8 @@ class Item < ApplicationRecord
   belongs_to :product_condition
   has_one_attached :image
 
-  validates :image, :product_name, :selling_price, presence: true
+  validates :image, :product_name, presence: true
+  validates :selling_price, length: { minimum: 300, maximum: 9999999 }
   validates :burden_of_shipping_charge_id, numericality: { other_than: 1 , message: "can't be blank" }
   validates :product_category_id, numericality: { other_than: 1 , message: "can't be blank" }
   validates :days_to_ship_id, numericality: { other_than: 1 , message: "can't be blank" }
