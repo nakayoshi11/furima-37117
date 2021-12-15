@@ -15,6 +15,6 @@ class Item < ApplicationRecord
   validates :days_to_ship_id, numericality: { other_than: 1 , message: "can't be blank" }
   validates :prefecture_id, numericality: { other_than: 1 , message: "can't be blank" }
   validates :product_condition_id, numericality: { other_than: 1 , message: "can't be blank" }
-  # validates :selling_price, with: /\A[0-9]+\z/, message: 'is invalid. Input half-width characters'
-  validates :selling_price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+  validates :selling_price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999 }
+
 end
