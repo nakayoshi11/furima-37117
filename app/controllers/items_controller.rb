@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  before_action :set_item, only: [:edit, :show]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :move_to_index, only: [:edit]
 
@@ -11,11 +12,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
   end
   
   def create
@@ -35,17 +34,21 @@ class ItemsController < ApplicationController
       render :edit
     end
   end
-end
 
 private
 
-def item_params
-  params.require(:item).permit(:image, :product_name, :product_description, :product_category_id, :product_condition_id, :burden_of_shipping_charge_id, :prefecture_id, :days_to_ship_id, :selling_price).merge(user_id: current_user.id)
+  def item_params
+    params.require(:item).permit(:image, :product_name, :product_description, :product_category_id, :product_condition_id, :burden_of_shipping_charge_id, :prefecture_id, :days_to_ship_id, :selling_price).merge(user_id: current_user.id)
+  end
+
+  def move_to_index
+    @item = Item.find(params[:id])
+  unless current_user.id == @item.user_id
+    redirect_to action: :index
+  end
 end
 
-def move_to_index
-  @item = Item.find(params[:id])
-unless user_signed_in? && current_user.id == @item.user_id
-  redirect_to action: :index
-end
+  def set_item
+    @item = Item.find(params[:id])
+  end
 end
