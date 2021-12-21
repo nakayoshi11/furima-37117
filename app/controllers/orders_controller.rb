@@ -1,15 +1,13 @@
 class OrdersController < ApplicationController
-  # before_action :set_item, only: [:edit, :show, :update, :destroy]
+  before_action :set_item, only: [:index, :create, :move_to_index]
   before_action :authenticate_user!, only: [:index]
   before_action :move_to_index, only: [:index]
 
   def index
-    @item = Item.find(params[:item_id])
     @item_address = ItemAddress.new
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @item_address = ItemAddress.new(address_params)
     if @item_address.valid?
 
@@ -33,14 +31,13 @@ end
     params.require(:item_address).permit(:postal_code, :prefecture_id, :city, :address, :building_name, :telephone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token])
   end
 
-  def item_params
-    params.require(:item).permit(:image, :product_name, :product_description, :product_category_id, :product_condition_id, :burden_of_shipping_charge_id, :prefecture_id, :days_to_ship_id, :selling_price).merge(user_id: current_user.id)
-  end
-
   def move_to_index
-    @item = Item.find(params[:item_id])
     if current_user.id == @item.user_id || @item.purchase_history
       redirect_to root_path
     end
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
   end
 end

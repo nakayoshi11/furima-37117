@@ -2,16 +2,24 @@ require 'rails_helper'
 RSpec.describe Address, type: :model do
 
   before do
-    @address = FactoryBot.build(:item_address)
+    user = FactoryBot.create(:user)
+    item = FactoryBot.create(:item)
+    @address = FactoryBot.build(:item_address, user_id: user.id, item_id: item.id)
+
+    sleep 0.5
   end
 
   describe '商品購入' do
     context '商品が購入できる時' do
+      it '全ての値が存在すれば登録できる' do
+        expect(@address).to be_valid
+      end
       it '建物名以外全ての値が存在すれば登録できる' do
+        @address.building_name = ''
         expect(@address).to be_valid
       end
     end
-    context '新規登録できない時' do
+    context '商品が購入できない時' do
       it 'postal_codeが空では登録できない' do
         @address.postal_code = ''
         @address.valid?
@@ -52,9 +60,21 @@ RSpec.describe Address, type: :model do
         @address.valid?
         expect(@address.errors.full_messages).to include "Telephone number is too short"
       end
+      it 'tokenが空では登録できない' do
+        @address.token = ''
+        @address.valid?
+        expect(@address.errors.full_messages).to include "Token can't be blank"
+      end
+      it 'userが紐付いていなければ購入できない' do
+        @address.user_id = nil
+        @address.valid?
+        expect(@address.errors.full_messages).to include "User can't be blank"
+      end
+      it 'itemが紐付いていなければ購入できない' do
+        @address.item_id = nil
+        @address.valid?
+        expect(@address.errors.full_messages).to include "Item can't be blank"
+      end
     end
   end
-end
-RSpec.describe Address, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
 end

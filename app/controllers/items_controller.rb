@@ -15,6 +15,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    if @item.purchase_history
+      redirect_to action: :index
+    end
   end
 
   def destroy
