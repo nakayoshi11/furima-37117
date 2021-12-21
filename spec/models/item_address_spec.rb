@@ -15,6 +15,11 @@ RSpec.describe Address, type: :model do
       it 'postal_codeが空では登録できない' do
         @address.postal_code = ''
         @address.valid?
+        expect(@address.errors.full_messages).to include "Postal code can't be blank"
+      end
+      it 'postal_codeにハイフンなしでは登録できない' do
+        @address.postal_code = '1234567'
+        @address.valid?
         expect(@address.errors.full_messages).to include "Postal code is invalid. Include hyphen(-)"
       end
       it 'prefecture_idが空では登録できない' do
