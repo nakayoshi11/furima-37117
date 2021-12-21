@@ -75,6 +75,11 @@ RSpec.describe Address, type: :model do
         @address.valid?
         expect(@address.errors.full_messages).to include "Item can't be blank"
       end
+      it '電話番号に半角数字以外が含まれている場合は購入できない' do
+        @address.telephone_number = '123456789０'
+        @address.valid?
+        expect(@address.errors.full_messages).to include "Telephone number Half-width numerical value only"
+      end
     end
   end
 end
