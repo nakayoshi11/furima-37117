@@ -10,7 +10,7 @@ class ItemAddress
 
 end
 validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
-validates :telephone_number, length: { minimum: 10, message: 'is too short' }
+validates :telephone_number, length: { minimum: 9, message: 'is too short' }
 validates :telephone_number, length: { maximum: 11, message: 'is too long' }
 
 def save
