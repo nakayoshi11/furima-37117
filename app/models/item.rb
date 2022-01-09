@@ -7,9 +7,9 @@ class Item < ApplicationRecord
   belongs_to :product_condition
   belongs_to :user
   has_one :purchase_history
-  has_many_attached :images
+  has_one_attached :image
 
-  validates :images, :product_name,:selling_price, :product_description, presence: true
+  validates :image, :product_name,:selling_price, :product_description, presence: true
 
   validates :burden_of_shipping_charge_id, numericality: { other_than: 1 , message: "can't be blank" }
   validates :product_category_id, numericality: { other_than: 1 , message: "can't be blank" }

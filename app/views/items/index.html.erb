@@ -132,7 +132,8 @@
         <% @items.each do |item| %>
           <%= link_to item_path(item.id) do %>
           <div class='item-img-content'>
-          <%= image_tag item.images[0] %><br>
+            <%= image_tag item.image, class: "item-img" %>
+
           <div class='sold-out'>
           <% if item.purchase_history %>
             <span>Sold Out!!</span>
